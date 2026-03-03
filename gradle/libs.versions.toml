@@ -18,6 +18,9 @@ multiplatformSettingsNoArg = "1.3.0"
 supabase = "3.2.6"
 koin-bom = "4.1.1"
 buildconfig = "6.0.6"
+room = "2.8.4"
+sqlite = "2.6.2"
+ksp = "2.3.5"
 
 # Testing libraries
 androidx-testExt = "1.3.0"
@@ -74,6 +77,11 @@ ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serializatio
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-websockets = { module = "io.ktor:ktor-server-websockets", version.ref = "ktor" }
 
+# Cache libraries
+androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
 # Testing libraries
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-annotations = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
@@ -110,6 +118,8 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
+androidx-room = { id = "androidx.room", version.ref = "room" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 # Static Analysis
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

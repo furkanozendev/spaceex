@@ -6,8 +6,8 @@ kotlin {
     sourceSets {
         val commonMain by getting
         commonMain.dependencies {
-            /*implementation(project(":feature:auth"))
-            implementation(project(":feature:home"))*/
+            /*implementation(project(":feature:home"))
+            implementation(project(":feature:detail"))*/
             implementation(libs.ui.backhandler)
         }
     }

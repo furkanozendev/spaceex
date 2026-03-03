@@ -1,14 +1,13 @@
 package spaceex.plugin
 
 import com.android.build.gradle.LibraryExtension
-import spaceex.ext.libs
-import spaceex.ext.moduleName
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.compose.ComposeExtension
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import spaceex.ext.libs
+import spaceex.ext.moduleName
 
 /**
  * Convention plugin for presentation layer modules.
@@ -102,8 +101,8 @@ class PresentationConventionPlugin : BaseConventionPlugin() {
                     implementation(libs.findLibrary("androidx-lifecycle-runtimeCompose").get())
 
                     // Core modules
-                    /*implementation(project(":core:domain"))
-                    implementation(project(":core:navigation"))*/
+                    implementation(project(":core:domain"))
+                    implementation(project(":core:navigation"))
                 }
             }
         }

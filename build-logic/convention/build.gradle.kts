@@ -54,6 +54,11 @@ gradlePlugin {
             id = "spaceex.plugin.presentation"
             implementationClass = "spaceex.plugin.PresentationConventionPlugin"
         }
+        // Ui module convention plugin
+        register("spaceex.plugin.ui") {
+            id = "spaceex.plugin.ui"
+            implementationClass = "spaceex.plugin.UiConventionPlugin"
+        }
         // Application module convention plugin
         register("spaceex.plugin.application") {
             id = "spaceex.plugin.application"

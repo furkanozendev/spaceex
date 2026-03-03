@@ -1,15 +1,14 @@
 package spaceex.plugin
 
 import com.android.build.api.dsl.ApplicationExtension
-import spaceex.ext.libs
-import spaceex.ext.moduleName
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.compose.ComposeExtension
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import spaceex.ext.libs
+import spaceex.ext.moduleName
 
 class ApplicationConventionPlugin : BaseConventionPlugin() {
     override fun Project.configurePlugin() =
@@ -111,9 +110,9 @@ class ApplicationConventionPlugin : BaseConventionPlugin() {
                     implementation(libs.findLibrary("koin-core").get())
                     implementation(libs.findLibrary("koin-compose").get())
 
-                    /*implementation(project(":core:navigation"))
+                    implementation(project(":core:navigation"))
                     implementation(project(":core:domain"))
-                    implementation(project(":core:network"))*/
+                    implementation(project(":core:network"))
                 }
 
                 // Android specific dependencies
