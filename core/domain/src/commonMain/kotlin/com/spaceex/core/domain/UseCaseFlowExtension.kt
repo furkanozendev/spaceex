@@ -13,8 +13,8 @@ inline fun <reified T> Flow<RestResult<T>>.buildDefaultFlow(
 ): Flow<RestResult<T>> {
     return this.onStart {
         emit(RestResult.Loading(loading))
-    }.catch { _ ->
-        emit(RestResult.Error)
+    }.catch { throwable ->
+        emit(RestResult.Error<Nothing>(error = throwable))
     }.onCompletion {
         emit(RestResult.Loading(false))
     }.flowOn(dispatcher)

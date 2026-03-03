@@ -1,17 +1,36 @@
 package com.spaceex.core.data
 
-import com.spaceex.core.cache.CacheHandler
 import com.spaceex.core.cache.CacheResult
 import com.spaceex.core.domain.RestResult
-import com.spaceex.core.network.handler.RequestHandler
+import com.spaceex.core.network.helper.asRestResult
 import io.ktor.client.statement.HttpResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 
-abstract class BaseRepository(
-    @PublishedApi internal val requestHandler: RequestHandler,
-    @PublishedApi internal val cacheHandler: CacheHandler
-) {
+abstract class BaseRepository {
+
+    protected suspend inline fun <reified T : Any> safeApiCall(
+        crossinline call: suspend () -> HttpResponse
+    ): RestResult<T> = withContext(Dispatchers.IO) {
+        try {
+            call().asRestResult()
+        } catch (e: Exception) {
+            RestResult.Error<T>(e)
+        }
+    }
+
+    protected suspend inline fun <reified T> safeCacheCall(
+        crossinline call: suspend () -> T
+    ): CacheResult<T> = withContext(Dispatchers.IO) {
+        try {
+            CacheResult.Success(call())
+        } catch (e: Exception) {
+            CacheResult.Error(e)
+        }
+    }
 
     protected inline fun <reified NetworkType : Any, reified LocalType, DomainType> offlineFirstFlow(
         crossinline fetchFromNetwork: suspend () -> HttpResponse,
@@ -22,7 +41,7 @@ abstract class BaseRepository(
     ): Flow<RestResult<DomainType>> = flow {
         emit(RestResult.Loading<Nothing>())
 
-        val cacheResponse = cacheHandler.query<LocalType> { readFromLocal() }
+        val cacheResponse = safeCacheCall<LocalType> { readFromLocal() }
         val cachedData = (cacheResponse as? CacheResult.Success)?.data
 
         val hasCachedData = cachedData != null && (cachedData !is List<*> || cachedData.isNotEmpty())
@@ -36,13 +55,13 @@ abstract class BaseRepository(
             return@flow
         }
 
-        val networkResponse = requestHandler.request<NetworkType> { fetchFromNetwork() }
+        val networkResponse = safeApiCall<NetworkType> { fetchFromNetwork() }
 
         when (networkResponse) {
             is RestResult.Success -> {
-                cacheHandler.query<Unit> { saveToLocal(networkResponse.result) }
+                safeCacheCall<Unit> { saveToLocal(networkResponse.result) }
 
-                val freshCacheResponse = cacheHandler.query<LocalType> { readFromLocal() }
+                val freshCacheResponse = safeCacheCall<LocalType> { readFromLocal() }
                 val freshData = (freshCacheResponse as? CacheResult.Success)?.data
 
                 if (freshData != null) {
@@ -65,9 +84,9 @@ abstract class BaseRepository(
         }
     }
 
-    protected suspend inline fun <reified T : Any> networkOnly(
+    protected inline fun <reified T : Any> networkOnly(
         crossinline call: suspend () -> HttpResponse
-    ): RestResult<T> {
-        return requestHandler.request(call)
+    ): Flow<RestResult<T>> = flow {
+        emit(safeApiCall(call))
     }
 }

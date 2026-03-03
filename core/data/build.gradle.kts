@@ -8,8 +8,8 @@ kotlin {
         val commonMain by getting
         commonMain.dependencies {
             implementation(project(":core:domain"))
-            implementation(project(":core:network"))
-            implementation(project(":core:cache"))
+            api(project(":core:network"))
+            api(project(":core:cache"))
 
             implementation(libs.ktor.client.core)
         }
