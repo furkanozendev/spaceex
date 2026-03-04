@@ -85,9 +85,26 @@ abstract class BaseRepository {
         }
     }
 
-    protected inline fun <reified T : Any> networkOnly(
-        crossinline call: suspend () -> HttpResponse
-    ): Flow<RestResult<T>> = flow {
-        emit(safeApiCall(call))
+    protected inline fun <reified NetworkType : Any, DomainType> networkOnlyFlow(
+        crossinline fetchFromNetwork: suspend () -> HttpResponse,
+        crossinline mapToDomain: (NetworkType) -> DomainType
+    ): Flow<RestResult<DomainType>> = flow {
+        emit(RestResult.Loading<Nothing>())
+
+        val networkResponse = safeApiCall<NetworkType> { fetchFromNetwork() }
+
+        when (networkResponse) {
+            is RestResult.Success -> {
+                emit(RestResult.Success(mapToDomain(networkResponse.result)))
+            }
+
+            is RestResult.Error -> {
+                emit(RestResult.Error(networkResponse.error))
+            }
+
+            is RestResult.Loading -> {
+                emit(RestResult.Loading<Nothing>())
+            }
+        }
     }
 }

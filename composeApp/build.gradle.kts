@@ -16,6 +16,7 @@ kotlin {
             implementation(projects.feature.home.data)
             implementation(projects.feature.home.domain)
             implementation(projects.feature.home.presentation)
+            implementation(projects.feature.detail.contract)
             implementation(projects.feature.detail.data)
             implementation(projects.feature.detail.domain)
             implementation(projects.feature.detail.presentation)

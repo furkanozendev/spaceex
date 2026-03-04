@@ -9,9 +9,9 @@ class RocketApi(
     private val httpClient: HttpClient
 ) {
 
-    suspend fun getRocketDetail(id: String) =
+    suspend fun getRocketDetail(rocketId: String) =
         httpClient.request {
-            url(urlString = "https://api.spacexdata.com/v4/rockets/$id")
+            url(urlString = "https://api.spacexdata.com/v4/rockets/$rocketId")
 
             method = HttpMethod.Get
         }

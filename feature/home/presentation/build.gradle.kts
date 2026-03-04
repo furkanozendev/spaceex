@@ -10,6 +10,7 @@ kotlin {
             implementation(project(":core:designsystem"))
             implementation(project(":core:navigation"))
             implementation(project(":feature:home:contract"))
+            implementation(project(":feature:detail:contract"))
             implementation(project(":feature:home:domain"))
         }
     }

@@ -12,7 +12,6 @@ abstract class LaunchDatabase : RoomDatabase() {
     abstract fun launchDao(): LaunchDao
 }
 
-@Suppress("KotlinNoActualForExpect")
 expect object AppDatabaseConstructor : RoomDatabaseConstructor<LaunchDatabase> {
     override fun initialize(): LaunchDatabase
 }

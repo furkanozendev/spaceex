@@ -8,6 +8,7 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":core:presentation"))
             implementation(project(":core:designsystem"))
+            implementation(project(":feature:detail:contract"))
             implementation(project(":feature:detail:domain"))
         }
     }

@@ -13,5 +13,6 @@ data class LaunchDto(
     @SerialName("details") val details: String? = null,
     @SerialName("links") val links: LinksDto,
     @SerialName("failures") val failures: List<FailureDto> = emptyList(),
-    @SerialName("cores") val cores: List<CoreDto> = emptyList()
+    @SerialName("cores") val cores: List<CoreDto> = emptyList(),
+    @SerialName("rocket") val rocketId: String? = null
 )

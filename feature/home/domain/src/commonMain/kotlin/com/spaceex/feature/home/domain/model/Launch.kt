@@ -9,5 +9,6 @@ data class Launch(
     val description: String,
     val imageUrl: String?,
     val youtubeId: String?,
-    val hasLandingSuccess: Boolean
+    val hasLandingSuccess: Boolean,
+    val rocketId: String?
 )

@@ -19,7 +19,8 @@ fun LaunchDto.toDomain(): Launch {
         description = details ?: "No details provided.",
         imageUrl = links.patch?.small ?: links.patch?.large,
         youtubeId = links.youtubeId,
-        hasLandingSuccess = cores.any { it.landingSuccess == true }
+        hasLandingSuccess = cores.any { it.landingSuccess == true },
+        rocketId = rocketId
     )
 }
 
@@ -32,7 +33,8 @@ fun LaunchDto.toEntity(): LaunchEntity {
         success = success,
         details = details,
         imageUrl = links.patch?.small,
-        youtubeId = links.youtubeId
+        youtubeId = links.youtubeId,
+        rocketId = rocketId
     )
 }
 
@@ -50,6 +52,7 @@ fun LaunchEntity.toDomain(): Launch {
         description = details ?: "",
         imageUrl = imageUrl,
         youtubeId = youtubeId,
-        hasLandingSuccess = false
+        hasLandingSuccess = false,
+        rocketId = rocketId
     )
 }

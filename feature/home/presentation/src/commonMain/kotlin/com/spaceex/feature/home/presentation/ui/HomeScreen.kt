@@ -105,7 +105,7 @@ internal fun LaunchListScreen(launches: List<Launch>, actions: HomeActions) {
             LaunchItem(
                 launch = launch,
                 modifier = Modifier.animateItem(),
-                onClick = { actions.navigateToDetail(launch.id) }
+                onClick = { actions.navigateToDetail(launch.rocketId) }
             )
         }
     }

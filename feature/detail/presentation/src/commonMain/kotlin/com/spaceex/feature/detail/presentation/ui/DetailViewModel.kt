@@ -1,37 +1,42 @@
-package com.spaceex.feature.home.presentation.ui
+package com.spaceex.feature.detail.presentation.ui
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.spaceex.core.domain.RestResult
-import com.spaceex.core.navigation.NavigationManager
 import com.spaceex.core.presentation.CoreViewModel
 import com.spaceex.feature.detail.contract.DetailScreenDestination
-import com.spaceex.feature.home.domain.usecase.GetLaunchesUseCase
+import com.spaceex.feature.detail.domain.usecase.GetRocketDetailUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-internal class HomeViewModel(
-    private val getLaunches: GetLaunchesUseCase,
-    private val navigationManager: NavigationManager
-) : CoreViewModel(), HomeActions {
+internal class DetailViewModel(
+    private val savedStateHandle: SavedStateHandle,
+    private val getRocketDetail: GetRocketDetailUseCase
+) : CoreViewModel(), DetailActions {
 
-    private val _uiState = MutableStateFlow(HomeUiState())
-    val uiState: StateFlow<HomeUiState>
+    val args by lazy {
+        savedStateHandle.toRoute<DetailScreenDestination>()
+    }
+
+    private val _uiState = MutableStateFlow(DetailUiState())
+    val uiState: StateFlow<DetailUiState>
         get() = _uiState
 
     init {
-        getLaunches()
+        getRocketDetail(args.rocketId)
     }
 
-    fun getLaunches() {
+    private fun getRocketDetail(rocketId: String) {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
 
-            safeFlowApiCall { getLaunches.invoke() }
+            safeFlowApiCall { getRocketDetail.invoke(rocketId) }
                 .collect { result ->
                     when (result) {
                         is RestResult.Success -> {
-                            _uiState.value = _uiState.value.copy(isLoading = false, launch = result.result)
+                            _uiState.value = _uiState.value.copy(isLoading = false, rocket = result.result)
                         }
 
                         is RestResult.Error -> {
@@ -41,20 +46,18 @@ internal class HomeViewModel(
                         }
 
                         is RestResult.Loading -> {
-                            _uiState.value = _uiState.value.copy(isLoading = true, launch = result.result.orEmpty())
+                            _uiState.value = _uiState.value.copy(isLoading = true, rocket = result.result)
                         }
                     }
                 }
         }
     }
 
-    override fun navigateToDetail(rocketId: String?) {
-        if (rocketId == null) {
-            // TODO Show Error
-            return
-        }
+    override fun onClickYoutube() {
+        TODO("Not yet implemented")
+    }
 
-
-        navigationManager.navigate(navigationCommand = DetailScreenDestination(rocketId = rocketId))
+    override fun onClickMoreDetail() {
+        TODO("Not yet implemented")
     }
 }

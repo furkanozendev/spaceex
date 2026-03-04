@@ -5,5 +5,5 @@ import com.spaceex.feature.detail.domain.model.Rocket
 import kotlinx.coroutines.flow.Flow
 
 interface RocketRepository {
-    fun getRocketDetail(id: String): Flow<RestResult<Rocket>>
+    fun getRocketDetail(rocketId: String): Flow<RestResult<Rocket>>
 }
