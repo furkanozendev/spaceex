@@ -24,6 +24,9 @@ class LaunchRepositoryImpl(
                 dao.insertLaunches(networkDtos.map { it.toEntity() })
             },
             readFromLocal = { dao.getAllLaunches() },
+            mapNetworkToDomain = { dto ->
+                dto.map { it.toDomain() }
+            },
             mapToDomain = { localEntities ->
                 localEntities.map { it.toDomain() }
             }

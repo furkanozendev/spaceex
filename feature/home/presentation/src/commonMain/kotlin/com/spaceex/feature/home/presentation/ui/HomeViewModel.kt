@@ -28,16 +28,17 @@ internal class HomeViewModel(
                 .collect { result ->
                     when (result) {
                         is RestResult.Success -> {
-                            _uiState.value = _uiState.value.copy(isLoading = false, launch = result.result[1])
+                            _uiState.value = _uiState.value.copy(isLoading = false, launch = result.result)
                         }
 
                         is RestResult.Error -> {
+                            result.error.printStackTrace()
                             val errorMessage = result.error.message ?: "Unknown error"
                             _uiState.value = _uiState.value.copy(isLoading = false, errorMessage = errorMessage)
                         }
 
                         is RestResult.Loading -> {
-                            _uiState.value = _uiState.value.copy(isLoading = true, launch = result.result?.get(1))
+                            _uiState.value = _uiState.value.copy(isLoading = true, launch = result.result.orEmpty())
                         }
                     }
                 }

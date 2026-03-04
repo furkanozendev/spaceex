@@ -37,6 +37,7 @@ abstract class BaseRepository {
         crossinline saveToLocal: suspend (NetworkType) -> Unit,
         crossinline readFromLocal: suspend () -> LocalType,
         crossinline mapToDomain: (LocalType) -> DomainType,
+        crossinline mapNetworkToDomain: (NetworkType) -> DomainType,
         crossinline shouldFetch: (LocalType) -> Boolean = { true }
     ): Flow<RestResult<DomainType>> = flow {
         emit(RestResult.Loading<Nothing>())
@@ -64,10 +65,10 @@ abstract class BaseRepository {
                 val freshCacheResponse = safeCacheCall<LocalType> { readFromLocal() }
                 val freshData = (freshCacheResponse as? CacheResult.Success)?.data
 
-                if (freshData != null) {
+                if (freshData != null && (freshData !is List<*> || (freshData as List<*>).isNotEmpty())) {
                     emit(RestResult.Success(mapToDomain(freshData)))
                 } else {
-                    emit(RestResult.Error<Nothing>(Exception("Cache read failed after network save.")))
+                    emit(RestResult.Success(mapNetworkToDomain(networkResponse.result)))
                 }
             }
 

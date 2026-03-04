@@ -11,6 +11,7 @@ kotlin {
             implementation(projects.core.data)
             implementation(projects.core.domain)
             implementation(projects.core.navigation)
+            implementation(projects.core.designsystem)
             implementation(projects.feature.home.contract)
             implementation(projects.feature.home.data)
             implementation(projects.feature.home.domain)

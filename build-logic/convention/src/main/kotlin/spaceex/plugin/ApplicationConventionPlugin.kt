@@ -8,7 +8,6 @@ import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.compose.ComposeExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import spaceex.ext.libs
-import spaceex.ext.moduleName
 
 class ApplicationConventionPlugin : BaseConventionPlugin() {
     override fun Project.configurePlugin() =
@@ -79,7 +78,7 @@ class ApplicationConventionPlugin : BaseConventionPlugin() {
                 iosSimulatorArm64(),
             ).forEach { iosTarget ->
                 iosTarget.binaries.framework {
-                    baseName = moduleName
+                    baseName = "ComposeApp"
                     isStatic = false
                 }
             }
