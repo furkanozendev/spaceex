@@ -33,7 +33,7 @@ class ApplicationConventionPlugin : BaseConventionPlugin() {
         }
 
         extensions.getByType<ApplicationExtension>().apply {
-            namespace = "com.spaceex.composeapp"
+            namespace = "com.spaceex"
             compileSdk = targetSdk
             defaultConfig {
                 this.applicationId = "com.spaceex"

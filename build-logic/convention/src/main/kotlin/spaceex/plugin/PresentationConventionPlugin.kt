@@ -100,6 +100,9 @@ class PresentationConventionPlugin : BaseConventionPlugin() {
                     implementation(libs.findLibrary("androidx-lifecycle-viewmodelCompose").get())
                     implementation(libs.findLibrary("androidx-lifecycle-runtimeCompose").get())
 
+                    // Navigation
+                    implementation(libs.findLibrary("navigation-compose").get())
+
                     // Core modules
                     implementation(project(":core:domain"))
                     implementation(project(":core:navigation"))

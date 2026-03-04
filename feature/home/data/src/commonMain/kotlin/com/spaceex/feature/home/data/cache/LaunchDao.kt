@@ -12,5 +12,5 @@ interface LaunchDao {
     suspend fun insertLaunches(launches: List<LaunchEntity>)
 
     @Query("SELECT * FROM launches")
-    fun getAllLaunches(): List<LaunchEntity>
+    suspend fun getAllLaunches(): List<LaunchEntity>
 }

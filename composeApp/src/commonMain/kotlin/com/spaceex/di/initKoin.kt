@@ -1,0 +1,25 @@
+package com.spaceex.di
+
+import com.spaceex.core.cache.di.cacheModule
+import com.spaceex.core.navigation.navigationModule
+import com.spaceex.core.network.di.networkModule
+import com.spaceex.feature.home.data.di.homeDataModule
+import com.spaceex.feature.home.domain.di.domainModule
+import com.spaceex.feature.home.presentation.di.homePresentationModule
+import org.koin.core.context.startKoin
+import org.koin.dsl.KoinAppDeclaration
+
+fun initKoin(config: KoinAppDeclaration? = null) {
+    startKoin {
+        config?.invoke(this)
+
+        modules(
+            cacheModule,
+            navigationModule,
+            networkModule,
+            domainModule,
+            homeDataModule,
+            homePresentationModule
+        )
+    }
+}

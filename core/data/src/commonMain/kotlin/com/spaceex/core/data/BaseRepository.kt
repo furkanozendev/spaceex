@@ -71,15 +71,15 @@ abstract class BaseRepository {
                 }
             }
 
-            is RestResult.Loading<*> -> {
+            is RestResult.Loading -> {
                 emit(RestResult.Loading<Nothing>())
             }
 
-            is RestResult.Error<*> -> {
+            is RestResult.Error -> {
                 val currentData = if (hasCachedData) mapToDomain(cachedData as LocalType) else null
 
                 val throwable = networkResponse.error
-                emit(RestResult.Error<DomainType?>(throwable, result = currentData))
+                emit(RestResult.Error(throwable, result = currentData))
             }
         }
     }

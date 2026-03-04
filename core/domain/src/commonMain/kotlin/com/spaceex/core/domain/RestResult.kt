@@ -9,7 +9,7 @@ sealed class RestResult<out T> {
     data class Error<out T>(
         val error: Throwable,
         val result: T? = null
-    ) : RestResult<Nothing>()
+    ) : RestResult<T>()
 
-    data class Loading<out T>(val result: T? = null) : RestResult<Nothing>()
+    data class Loading<out T>(val result: T? = null) : RestResult<T>()
 }

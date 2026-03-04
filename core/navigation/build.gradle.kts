@@ -1,18 +1,15 @@
 plugins {
     id("spaceex.plugin.library")
-    alias(libs.plugins.kotlinxSerialization)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.composeMultiplatform)
 }
 
 kotlin {
     sourceSets {
         val commonMain by getting
         commonMain.dependencies {
-            implementation(kotlin("stdlib"))
-            implementation(compose.runtime)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation(libs.kotlinx.serialization.json)
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+
+            api(libs.navigation.compose)
         }
     }
 }

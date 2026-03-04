@@ -1,4 +1,4 @@
-package com.spaceex.spaceex
+package com.spaceex
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
