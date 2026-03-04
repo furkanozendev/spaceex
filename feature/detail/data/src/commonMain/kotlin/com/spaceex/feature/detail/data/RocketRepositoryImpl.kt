@@ -1,0 +1,17 @@
+package com.spaceex.feature.detail.data
+
+import com.spaceex.core.data.BaseRepository
+import com.spaceex.core.domain.RestResult
+import com.spaceex.feature.detail.data.network.RocketApi
+import com.spaceex.feature.detail.domain.model.Rocket
+import com.spaceex.feature.detail.domain.repository.RocketRepository
+import kotlinx.coroutines.flow.Flow
+
+class RocketRepositoryImpl(
+    private val api: RocketApi
+) : RocketRepository, BaseRepository() {
+
+    override fun getRocketDetail(id: String): Flow<RestResult<Rocket>> {
+        return networkOnly { api.getRocketDetail(id) }
+    }
+}
