@@ -13,7 +13,6 @@ class ApplicationConventionPlugin : BaseConventionPlugin() {
     override fun Project.configurePlugin() =
         with(project.pluginManager) {
             apply("spaceex.plugin.quality")
-            apply("spaceex.plugin.testing")
 
             apply(project.libs.findPlugin("kotlinMultiplatform").get().get().pluginId)
             apply(project.libs.findPlugin("androidApplication").get().get().pluginId)

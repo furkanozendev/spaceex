@@ -46,7 +46,12 @@ import com.spaceex.core.designsystem.component.SpaceexAsyncImage
 import com.spaceex.core.designsystem.theme.SpaceexTheme
 import com.spaceex.feature.home.domain.model.Launch
 import com.spaceex.feature.home.domain.model.LaunchStatus
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import spaceex.feature.home.presentation.generated.resources.Res
+import spaceex.feature.home.presentation.generated.resources.home_title
+import spaceex.feature.home.presentation.generated.resources.launch_aborted_message
+import spaceex.feature.home.presentation.generated.resources.retry_message
 
 @Composable
 internal fun HomeScreenRoute(
@@ -101,7 +106,7 @@ internal fun ErrorScreen(message: String, onRetry: () -> Unit) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Launch Aborted",
+            text = stringResource(Res.string.launch_aborted_message),
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.error,
             fontWeight = FontWeight.Bold
@@ -118,7 +123,7 @@ internal fun ErrorScreen(message: String, onRetry: () -> Unit) {
             onClick = onRetry,
             shape = RoundedCornerShape(8.dp)
         ) {
-            Text(text = "Retry System Initialization")
+            Text(text = stringResource(Res.string.retry_message))
         }
     }
 }
@@ -135,7 +140,7 @@ internal fun LaunchListScreen(launches: List<Launch>, actions: HomeActions) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 24.dp),
-                text = "SpaceeX Launches",
+                text = stringResource(Res.string.home_title),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,

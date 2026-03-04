@@ -15,6 +15,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
+import spaceex.feature.detail.presentation.generated.resources.Res
+import spaceex.feature.detail.presentation.generated.resources.launch_data_not_found_text
+import spaceex.feature.detail.presentation.generated.resources.rocket_data_not_found_text
 
 internal class DetailViewModel(
     savedStateHandle: SavedStateHandle,
@@ -42,7 +46,7 @@ internal class DetailViewModel(
             launchProvider.getLaunchById(args.launchId)
                 .combine(rocketStateFlow) { localLaunch, rocketState ->
                     if (localLaunch == null) {
-                        DetailUiState.Error("Launch data not found in local system.")
+                        DetailUiState.Error(getString(Res.string.launch_data_not_found_text))
                     } else {
                         DetailUiState.Success(
                             launch = localLaunch,
@@ -65,10 +69,12 @@ internal class DetailViewModel(
                         is RestResult.Success -> {
                             rocketStateFlow.value = RocketUiState.Success(result.result)
                         }
+
                         is RestResult.Error -> {
-                            val errorMessage = result.error.message ?: "Failed to load rocket data"
+                            val errorMessage = result.error.message ?: getString(Res.string.rocket_data_not_found_text)
                             rocketStateFlow.value = RocketUiState.Error(errorMessage)
                         }
+
                         is RestResult.Loading -> {
                             rocketStateFlow.value = RocketUiState.Loading
                         }

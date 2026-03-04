@@ -87,9 +87,6 @@ class DataConventionPlugin : BaseConventionPlugin() {
                     // Serialization
                     implementation(libs.findLibrary("kotlinx-serialization-json").get())
 
-                    // Optional: DateTime for data models
-                    implementation(libs.findLibrary("kotlinx-datetime").get())
-
                     implementation(project(":core:domain"))
                     implementation(project(":core:network"))
                 }

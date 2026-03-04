@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
+import spaceex.feature.home.presentation.generated.resources.Res
+import spaceex.feature.home.presentation.generated.resources.default_error_message
 
 internal class HomeViewModel(
     private val getLaunches: GetLaunchesUseCase,
@@ -35,7 +38,7 @@ internal class HomeViewModel(
                         is RestResult.Error -> {
                             val data = result.result
                             if (data.isNullOrEmpty()) {
-                                val errorMessage = result.error.message ?: "Unknown error occurred"
+                                val errorMessage = result.error.message ?: getString(Res.string.default_error_message)
                                 _uiState.value = HomeUiState.Error(errorMessage)
                             } else {
                                 _uiState.value = HomeUiState.Success(data)

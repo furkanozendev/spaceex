@@ -11,7 +11,7 @@ class RocketApi(
 
     suspend fun getRocketDetail(rocketId: String) =
         httpClient.request {
-            url(urlString = "https://api.spacexdata.com/v4/rockets/$rocketId")
+            url(urlString = "rockets/$rocketId")
 
             method = HttpMethod.Get
         }

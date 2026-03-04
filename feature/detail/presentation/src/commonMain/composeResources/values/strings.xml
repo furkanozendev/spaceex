@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="launch_vehicle_title">Launch Vehicle</string>
+    <string name="back_button_description">Navigate Back</string>
+    <string name="webcast_button_text">Webcast</string>
+    <string name="details_button_text">Details</string>
+    <string name="specs_section_text">Specs</string>
+    <string name="engines_section_text">Engines</string>
+    <string name="rocket_data_missing_text">Rocket Data Unavailable</string>
+    <string name="retry_button_text">Retry Connection</string>
+    <string name="active_status_text">ACTIVE</string>
+    <string name="inactive_status_text">INACTIVE</string>
+    <string name="height_label_text">Height</string>
+    <string name="mass_label_text">Mass</string>
+    <string name="first_flight_label_text">First Flight</string>
+    <string name="launch_data_not_found_text">Launch data not found in local system.</string>
+    <string name="rocket_data_not_found_text">Failed to load rocket data</string>
+</resources>

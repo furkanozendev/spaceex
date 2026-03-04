@@ -11,6 +11,8 @@ kotlin {
             implementation(project(":feature:detail:contract"))
             implementation(project(":feature:home:contract"))
             implementation(project(":feature:detail:domain"))
+
+            implementation(compose.components.resources)
         }
     }
 }

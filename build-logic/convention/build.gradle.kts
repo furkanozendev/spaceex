@@ -62,11 +62,6 @@ gradlePlugin {
             id = "spaceex.plugin.application"
             implementationClass = "spaceex.plugin.ApplicationConventionPlugin"
         }
-        // Testing convention plugin
-        register("spaceex.plugin.testing") {
-            id = "spaceex.plugin.testing"
-            implementationClass = "spaceex.plugin.TestingConventionPlugin"
-        }
         // Static Code Analysis convention plugin
         register("spaceex.plugin.quality") {
             id = "spaceex.plugin.quality"

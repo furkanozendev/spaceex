@@ -11,7 +11,7 @@ class LaunchApi(
 
     suspend fun getLaunches() =
         httpClient.request {
-            url(urlString = "https://api.spacexdata.com/v4/launches")
+            url(urlString = "launches")
 
             method = HttpMethod.Get
         }

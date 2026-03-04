@@ -61,7 +61,22 @@ import com.spaceex.feature.detail.domain.model.Rocket
 import com.spaceex.feature.detail.presentation.helper.rememberExternalUrlOpener
 import com.spaceex.feature.home.contract.model.LaunchContractModel
 import com.spaceex.feature.home.contract.model.LaunchContractStatus
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import spaceex.feature.detail.presentation.generated.resources.Res
+import spaceex.feature.detail.presentation.generated.resources.active_status_text
+import spaceex.feature.detail.presentation.generated.resources.back_button_description
+import spaceex.feature.detail.presentation.generated.resources.details_button_text
+import spaceex.feature.detail.presentation.generated.resources.engines_section_text
+import spaceex.feature.detail.presentation.generated.resources.first_flight_label_text
+import spaceex.feature.detail.presentation.generated.resources.height_label_text
+import spaceex.feature.detail.presentation.generated.resources.inactive_status_text
+import spaceex.feature.detail.presentation.generated.resources.launch_vehicle_title
+import spaceex.feature.detail.presentation.generated.resources.mass_label_text
+import spaceex.feature.detail.presentation.generated.resources.retry_button_text
+import spaceex.feature.detail.presentation.generated.resources.rocket_data_missing_text
+import spaceex.feature.detail.presentation.generated.resources.specs_section_text
+import spaceex.feature.detail.presentation.generated.resources.webcast_button_text
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -134,7 +149,7 @@ private fun CombinedDetailContent(
             )
 
             Text(
-                text = "Launch Vehicle",
+                text = stringResource(Res.string.launch_vehicle_title),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground
@@ -182,7 +197,7 @@ private fun LaunchHeroSection(launch: LaunchContractModel, onBackClick: () -> Un
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Navigate Back",
+                contentDescription = stringResource(Res.string.back_button_description),
                 tint = MaterialTheme.colorScheme.onSurface
             )
         }
@@ -278,7 +293,7 @@ private fun LaunchActionsSection(launch: LaunchContractModel) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Webcast",
+                    text = stringResource(Res.string.webcast_button_text),
                     color = ButtonOnDetailTextColor
                 )
             }
@@ -294,12 +309,13 @@ private fun LaunchActionsSection(launch: LaunchContractModel) {
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onBackground)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Info, contentDescription = null,
+                    imageVector = Icons.Default.Info,
+                    contentDescription = null,
                     tint = MaterialTheme.colorScheme.onBackground
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Details",
+                    text = stringResource(Res.string.details_button_text),
                     color = MaterialTheme.colorScheme.onBackground
                 )
             }
@@ -332,8 +348,8 @@ private fun RocketDetailContent(rocket: Rocket) {
             massKg = rocket.massKg,
             firstFlightDate = rocket.firstFlightDate
         )
-        RocketSection(title = "Specs", content = rocket.description)
-        RocketSection(title = "Engines", content = rocket.engineInfo)
+        RocketSection(title = stringResource(Res.string.specs_section_text), content = rocket.description)
+        RocketSection(title = stringResource(Res.string.engines_section_text), content = rocket.engineInfo)
     }
 }
 
@@ -358,7 +374,7 @@ private fun RocketErrorCard(message: String, onRetry: () -> Unit) {
                 modifier = Modifier.size(32.dp)
             )
             Text(
-                text = "Rocket Data Unavailable",
+                text = stringResource(Res.string.rocket_data_missing_text),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onErrorContainer
@@ -376,7 +392,7 @@ private fun RocketErrorCard(message: String, onRetry: () -> Unit) {
                     contentColor = MaterialTheme.colorScheme.onError
                 )
             ) {
-                Text("Retry Connection")
+                Text(stringResource(Res.string.retry_button_text))
             }
         }
     }
@@ -405,7 +421,11 @@ private fun ActiveStatusBadge(isActive: Boolean) {
     val backgroundColor =
         if (isActive) SpaceexTheme.extendedColors.successContainer else SpaceexTheme.extendedColors.errorContainer
     val textColor = if (isActive) SpaceexTheme.extendedColors.success else SpaceexTheme.extendedColors.error
-    val text = if (isActive) "ACTIVE" else "INACTIVE"
+    val text = if (isActive) {
+        stringResource(Res.string.active_status_text)
+    } else {
+        stringResource(Res.string.inactive_status_text)
+    }
 
     Surface(
         color = backgroundColor,
@@ -429,17 +449,17 @@ private fun RocketStatsRow(heightMeters: Double, massKg: Double, firstFlightDate
     ) {
         RocketStatCard(
             modifier = Modifier.weight(0.8f),
-            label = "Height",
+            label = stringResource(Res.string.height_label_text),
             value = "${heightMeters}m"
         )
         RocketStatCard(
             modifier = Modifier.weight(0.8f),
-            label = "Mass",
+            label = stringResource(Res.string.mass_label_text),
             value = "${massKg / 1000}t"
         )
         RocketStatCard(
             modifier = Modifier.weight(1.4f),
-            label = "First Flight",
+            label = stringResource(Res.string.first_flight_label_text),
             value = firstFlightDate
         )
     }

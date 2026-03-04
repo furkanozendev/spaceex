@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="launch_aborted_message">Launch Aborted</string>
+    <string name="retry_message">Retry System Initialization</string>
+    <string name="home_title">SpaceeX Launches</string>
+    <string name="default_error_message">Unknown error occurred</string>
+</resources>

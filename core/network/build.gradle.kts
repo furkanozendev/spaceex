@@ -28,18 +28,3 @@ kotlin {
         }
     }
 }
-
-buildConfig {
-    packageName("com.spaceex.core.network.config")
-
-    useKotlinOutput {
-        internalVisibility = false
-    }
-
-    val baseUrl =
-        project.findProperty("BASE_URL")?.toString()
-            ?: System.getenv("BASE_URL")
-            ?: error("BASE_URL is not set")
-
-    buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
-}

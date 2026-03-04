@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
+import platform.Foundation.NSHomeDirectory
 import platform.Foundation.NSUserDomainMask
 
 actual class DatabaseFactory {
@@ -18,14 +19,15 @@ actual class DatabaseFactory {
             directory = NSDocumentDirectory,
             inDomain = NSUserDomainMask,
             appropriateForURL = null,
-            create = false,
+            create = true,
             error = null,
         )
 
-        val dirPath = requireNotNull(documentDirectory?.path) { "Could not find Document directory" }
+        val dirPath = documentDirectory?.path ?: "${NSHomeDirectory()}/Documents"
 
         val cleanDirPath = dirPath.removeSuffix("/")
-        val dbFilePath = "$cleanDirPath/launches.db"
+
+        val dbFilePath = "$cleanDirPath/$name"
 
         return Room.databaseBuilder<T>(
             name = dbFilePath,

@@ -22,13 +22,17 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.stringResource
+import spaceex.core.designsystem.generated.resources.Res
+import spaceex.core.designsystem.generated.resources.communication_lost_error_title
+import spaceex.core.designsystem.generated.resources.errro_retry_button_title
 
 @Composable
 fun ErrorScreen(
     message: String,
     modifier: Modifier = Modifier,
-    title: String = "Communication Lost",
-    buttonText: String = "Retry Connection",
+    title: String = stringResource(Res.string.communication_lost_error_title),
+    buttonText: String = stringResource(Res.string.errro_retry_button_title),
     icon: ImageVector = Icons.Default.Warning,
     onRetry: () -> Unit
 ) {

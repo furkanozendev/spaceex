@@ -20,7 +20,6 @@ val DarkErrorContainer = Color(0xFFB71C1C)
 val DarkUpcoming = Color(0xFF64B5F6)
 val DarkUpcomingContainer = Color(0xFF0D47A1)
 
-
 // Not themed colors
 val WebcastColor = Color(0xFFD32F2F)
 val ButtonOnDetailTextColor = Color(0xFFE8F5E9)
