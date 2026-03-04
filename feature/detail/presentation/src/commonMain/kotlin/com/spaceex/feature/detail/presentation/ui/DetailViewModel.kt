@@ -71,7 +71,7 @@ internal class DetailViewModel(
                         }
 
                         is RestResult.Error -> {
-                            val errorMessage = result.error.message ?: getString(Res.string.rocket_data_not_found_text)
+                            val errorMessage = getString(Res.string.rocket_data_not_found_text)
                             rocketStateFlow.value = RocketUiState.Error(errorMessage)
                         }
 

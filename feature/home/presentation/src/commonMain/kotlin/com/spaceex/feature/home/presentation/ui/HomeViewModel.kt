@@ -38,7 +38,7 @@ internal class HomeViewModel(
                         is RestResult.Error -> {
                             val data = result.result
                             if (data.isNullOrEmpty()) {
-                                val errorMessage = result.error.message ?: getString(Res.string.default_error_message)
+                                val errorMessage = getString(Res.string.default_error_message)
                                 _uiState.value = HomeUiState.Error(errorMessage)
                             } else {
                                 _uiState.value = HomeUiState.Success(data)
