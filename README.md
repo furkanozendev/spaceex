@@ -1,4 +1,4 @@
-# SpaceX Explorer - KMP Case Study
+# SpaceeX - KMP Case Study
 
 ## 1. Executive Summary
 SpaceeX is a production-grade Kotlin Multiplatform (KMP) application designed to demonstrate scalable, cross-platform mobile architecture. By leveraging Compose Multiplatform, the project achieves 100% UI code sharing across Android and iOS while maintaining native performance and platform-specific capabilities where necessary. This case study highlights a highly modularized Clean Architecture, Unidirectional Data Flow, and an offline-first data strategy.
