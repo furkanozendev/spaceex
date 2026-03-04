@@ -1,6 +1,7 @@
 package com.spaceex.feature.detail.presentation.ui
 
-internal interface DetailActions { // TODO will add final version
-    fun onClickYoutube()
-    fun onClickMoreDetail()
+internal interface DetailActions {
+    fun onBackClick()
+    fun onRetryRocket(rocketId: String)
+    fun onRetryLaunch()
 }

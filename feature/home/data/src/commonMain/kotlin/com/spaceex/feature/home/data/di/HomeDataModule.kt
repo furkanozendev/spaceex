@@ -2,10 +2,12 @@ package com.spaceex.feature.home.data.di
 
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.spaceex.core.cache.DatabaseFactory
+import com.spaceex.feature.home.contract.provider.LaunchProvider
 import com.spaceex.feature.home.data.LaunchRepositoryImpl
 import com.spaceex.feature.home.data.cache.AppDatabaseConstructor
 import com.spaceex.feature.home.data.cache.LaunchDatabase
 import com.spaceex.feature.home.data.network.LaunchApi
+import com.spaceex.feature.home.data.provider.LaunchProviderImpl
 import com.spaceex.feature.home.domain.repository.LaunchRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -28,4 +30,6 @@ val homeDataModule = module {
     single { LaunchApi(httpClient = get()) }
 
     single<LaunchRepository> { LaunchRepositoryImpl(api = get(), dao = get()) }
+
+    single<LaunchProvider> { LaunchProviderImpl(dao = get()) }
 }

@@ -9,6 +9,7 @@ kotlin {
         val commonMain by getting
         commonMain.dependencies {
             implementation(project(":core:data"))
+            implementation(project(":feature:home:contract"))
             implementation(project(":feature:home:domain"))
 
             implementation(project.dependencies.platform(libs.koin.bom))

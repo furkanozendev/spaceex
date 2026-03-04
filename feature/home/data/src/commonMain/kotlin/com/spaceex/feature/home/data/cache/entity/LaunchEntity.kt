@@ -12,6 +12,7 @@ data class LaunchEntity(
     val success: Boolean?,
     val details: String?,
     val imageUrl: String?,
-    val youtubeId: String?,
+    val webcast: String?,
+    val article: String?,
     val rocketId: String?
 )

@@ -6,4 +6,7 @@ import com.spaceex.core.navigation.NavigationCommand
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DetailScreenDestination(val rocketId: String) : NavigationCommand.Destination
+data class DetailScreenDestination(
+    val rocketId: String,
+    val launchId: String
+) : NavigationCommand.Destination

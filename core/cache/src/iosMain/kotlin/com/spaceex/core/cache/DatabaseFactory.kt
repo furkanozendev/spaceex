@@ -22,9 +22,13 @@ actual class DatabaseFactory {
             error = null,
         )
 
-        val databaseFilePath = "$documentDirectory/$name"
+        val dirPath = requireNotNull(documentDirectory?.path) { "Could not find Document directory" }
+
+        val cleanDirPath = dirPath.removeSuffix("/")
+        val dbFilePath = "$cleanDirPath/launches.db"
+
         return Room.databaseBuilder<T>(
-            name = databaseFilePath,
+            name = dbFilePath,
             factory = { factory() }
         )
     }

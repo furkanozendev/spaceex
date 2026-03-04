@@ -8,6 +8,7 @@ import com.spaceex.feature.detail.contract.DetailScreenDestination
 import com.spaceex.feature.home.domain.usecase.GetLaunchesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
@@ -15,46 +16,57 @@ internal class HomeViewModel(
     private val navigationManager: NavigationManager
 ) : CoreViewModel(), HomeActions {
 
-    private val _uiState = MutableStateFlow(HomeUiState())
-    val uiState: StateFlow<HomeUiState>
-        get() = _uiState
+    private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
+    val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     init {
-        getLaunches()
+        loadLaunches()
     }
 
-    fun getLaunches() {
+    private fun loadLaunches() {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
-
             safeFlowApiCall { getLaunches.invoke() }
                 .collect { result ->
                     when (result) {
                         is RestResult.Success -> {
-                            _uiState.value = _uiState.value.copy(isLoading = false, launch = result.result)
+                            _uiState.value = HomeUiState.Success(result.result)
                         }
 
                         is RestResult.Error -> {
-                            result.error.printStackTrace()
-                            val errorMessage = result.error.message ?: "Unknown error"
-                            _uiState.value = _uiState.value.copy(isLoading = false, errorMessage = errorMessage)
+                            val data = result.result
+                            if (data.isNullOrEmpty()) {
+                                val errorMessage = result.error.message ?: "Unknown error occurred"
+                                _uiState.value = HomeUiState.Error(errorMessage)
+                            } else {
+                                _uiState.value = HomeUiState.Success(data)
+                            }
                         }
 
                         is RestResult.Loading -> {
-                            _uiState.value = _uiState.value.copy(isLoading = true, launch = result.result.orEmpty())
+                            val data = result.result
+                            if (data.isNullOrEmpty()) {
+                                _uiState.value = HomeUiState.Loading
+                            } else {
+                                _uiState.value = HomeUiState.Success(data)
+                            }
                         }
                     }
                 }
         }
     }
 
-    override fun navigateToDetail(rocketId: String?) {
-        if (rocketId == null) {
-            // TODO Show Error
-            return
-        }
+    override fun navigateToDetail(rocketId: String?, launchId: String) {
+        if (rocketId == null) return
+        navigationManager.navigate(
+            navigationCommand = DetailScreenDestination(
+                rocketId = rocketId,
+                launchId = launchId
+            )
+        )
+    }
 
-
-        navigationManager.navigate(navigationCommand = DetailScreenDestination(rocketId = rocketId))
+    override fun retry() {
+        _uiState.value = HomeUiState.Loading
+        loadLaunches()
     }
 }

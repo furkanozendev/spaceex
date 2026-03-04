@@ -22,7 +22,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -59,21 +59,66 @@ internal fun HomeScreenRoute(
 @Composable
 internal fun HomeScreen(uiState: HomeUiState, actions: HomeActions) {
     AnimatedContent(
-        targetState = uiState.isLoading,
+        modifier = Modifier.fillMaxSize(),
+        targetState = uiState,
         transitionSpec = {
-            fadeIn(animationSpec = tween(300)) togetherWith fadeOut(animationSpec = tween(300))
+            fadeIn(
+                animationSpec = tween(300)
+            ) togetherWith fadeOut(
+                animationSpec = tween(300)
+            )
         },
         label = "HomeScreenState"
-    ) { isLoading ->
-        if (isLoading) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
+    ) { state ->
+        when (state) {
+            is HomeUiState.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
             }
-        } else {
-            LaunchListScreen(launches = uiState.launch, actions = actions)
+
+            is HomeUiState.Success -> {
+                LaunchListScreen(launches = state.launches, actions = actions)
+            }
+
+            is HomeUiState.Error -> {
+                ErrorScreen(message = state.message, onRetry = actions::retry)
+            }
+        }
+    }
+}
+
+@Composable
+internal fun ErrorScreen(message: String, onRetry: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Launch Aborted",
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.error,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        Text(
+            text = message,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        Button(
+            onClick = onRetry,
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Text(text = "Retry System Initialization")
         }
     }
 }
@@ -105,7 +150,7 @@ internal fun LaunchListScreen(launches: List<Launch>, actions: HomeActions) {
             LaunchItem(
                 launch = launch,
                 modifier = Modifier.animateItem(),
-                onClick = { actions.navigateToDetail(launch.rocketId) }
+                onClick = { actions.navigateToDetail(rocketId = launch.rocketId, launchId = launch.id) }
             )
         }
     }
@@ -160,7 +205,6 @@ private fun LaunchContent(launch: Launch, modifier: Modifier = Modifier) {
         LaunchSubHeader(status = launch.status, dateFormatted = launch.dateFormatted)
         Spacer(modifier = Modifier.height(8.dp))
         LaunchDescription(description = launch.description)
-        LaunchFooter(youtubeId = launch.youtubeId, hasLandingSuccess = launch.hasLandingSuccess)
     }
 }
 
@@ -220,33 +264,6 @@ private fun LaunchDescription(description: String) {
         overflow = TextOverflow.Ellipsis,
         color = MaterialTheme.colorScheme.onSurface
     )
-}
-
-@Composable
-private fun LaunchFooter(youtubeId: String?, hasLandingSuccess: Boolean) {
-    if (youtubeId != null || hasLandingSuccess) {
-        Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (youtubeId != null) {
-                Icon(
-                    imageVector = Icons.Default.PlayArrow,
-                    contentDescription = null,
-                    modifier = Modifier.size(16.dp),
-                    tint = Color.Red
-                )
-            }
-            if (hasLandingSuccess) {
-                Text(
-                    text = "🛬 Landing Success",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = SpaceexTheme.extendedColors.success
-                )
-            }
-        }
-    }
 }
 
 @Composable
