@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -173,7 +172,6 @@ private fun LaunchHeroSection(launch: LaunchContractModel, onBackClick: () -> Un
             onClick = onBackClick,
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .statusBarsPadding()
                 .padding(start = 16.dp, top = 8.dp)
                 .size(44.dp)
                 .background(
