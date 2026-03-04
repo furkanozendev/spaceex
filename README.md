@@ -5,9 +5,13 @@ SpaceeX is a production-grade Kotlin Multiplatform (KMP) application designed to
 
 ## 2. Media Showcase
 
-| Android | iOS | Video Demo |
+| Android Home | iOS Home |
 | :---: | :---: | :---: |
-| ![Android UI](sample/android_home.png) | ![iOS UI](sample/ios_home.png) | ![Video Demo](sample/android_test.webm) |
+| ![Android UI](sample/android_home.png) | ![iOS UI](sample/ios_home.png) |
+
+| Android Detail | iOS Detail |
+| :---: | :---: | :---: |
+| ![Android UI](sample/android_detail.png) | ![iOS UI](sample/ios_detail.png) |
 
 ## 3. Tech Stack
 
