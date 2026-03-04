@@ -1,7 +1,6 @@
 plugins {
     id("spaceex.plugin.library")
     alias(libs.plugins.kotlinxSerialization)
-    alias(libs.plugins.buildconfig)
 }
 
 kotlin {

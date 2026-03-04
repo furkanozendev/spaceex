@@ -5,7 +5,7 @@ import io.ktor.client.HttpClient
 import org.koin.dsl.module
 
 // Should be in Build Config in Production App
-private const val BASE_URL = "https://api.spacexdata.com/v4/"
+private const val BASE_URL = "api.spacexdata.com/v4"
 
 val networkModule = module {
     single<HttpClient> {
