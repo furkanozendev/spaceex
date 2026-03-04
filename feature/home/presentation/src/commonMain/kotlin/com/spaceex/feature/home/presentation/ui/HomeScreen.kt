@@ -135,7 +135,7 @@ internal fun LaunchListScreen(launches: List<Launch>, actions: HomeActions) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 24.dp),
-                text = "SpaceX Launches",
+                text = "SpaceeX Launches",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,

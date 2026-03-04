@@ -28,8 +28,6 @@ dependencies {
     // Quality plugins need to be on classpath at runtime because we apply them programmatically
     implementation(libs.kotlin.serialization.gradlePlugin)
     implementation(libs.detekt.gradlePlugin)
-    implementation(libs.ktlint.gradlePlugin)
-    implementation(libs.kover.gradlePlugin)
 }
 
 gradlePlugin {

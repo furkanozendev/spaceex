@@ -1,15 +1,13 @@
 package spaceex.plugin
 
-import spaceex.ext.libs
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.Project
-import org.gradle.api.artifacts.dsl.DependencyHandler
+import spaceex.ext.libs
 
 class QualityConventionPlugin : BaseConventionPlugin() {
     override fun Project.configurePlugin() =
         with(project.pluginManager) {
             apply(project.libs.findPlugin("detekt").get().get().pluginId)
-            apply(project.libs.findPlugin("ktlint").get().get().pluginId)
-            apply(project.libs.findPlugin("kover").get().get().pluginId)
         }
 
     override fun Project.configureCommonDependencies() {
@@ -17,45 +15,31 @@ class QualityConventionPlugin : BaseConventionPlugin() {
             "detektPlugins",
             project.libs.findLibrary("detekt-formatting").get(),
         )
-        dependencies.ktlintRuleset(
-            project.libs.findLibrary("ktlint-ruleset-compose").get(),
-        )
 
-        extensions.configure(io.gitlab.arturbosch.detekt.extensions.DetektExtension::class.java) {
+        extensions.configure(DetektExtension::class.java) {
+            config.setFrom(files("$rootDir/detekt/detekt.yml"))
             buildUponDefaultConfig = true
             parallel = true
-            autoCorrect = true
-        }
 
-        extensions.configure(org.jlleitschuh.gradle.ktlint.KtlintExtension::class.java) {
-            android.set(true)
-            ignoreFailures.set(false)
-
-            verbose.set(true)
-            outputToConsole.set(true)
-            coloredOutput.set(true)
-
-            additionalEditorconfig.set(
-                mapOf(
-                    "ktlint_function_naming_ignore_when_annotated_with" to "Composable, Test",
-                ),
+            source.setFrom(
+                files(
+                    "src/commonMain/kotlin",
+                    "src/androidMain/kotlin",
+                    "src/jvmMain/kotlin",
+                    "src/iosMain/kotlin"
+                )
             )
-
-            filter {
-                exclude("**/build/**")
-                exclude("**/generated/**")
-            }
-
-            kotlinScriptAdditionalPaths {
-                include(fileTree("scripts/"))
-            }
         }
 
-        // Kover: keep defaults, or configure if needed
-        // extensions.configure(kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension::class.java) { }
+        tasks.withType(io.gitlab.arturbosch.detekt.Detekt::class.java).configureEach {
+            jvmTarget = "17"
+            autoCorrect = true
+            reports {
+                html.required.set(true)
+                xml.required.set(false)
+                txt.required.set(false)
+            }
+        }
     }
 }
 
-private fun DependencyHandler.ktlintRuleset(dep: Any) {
-    add("ktlintRuleset", dep)
-}

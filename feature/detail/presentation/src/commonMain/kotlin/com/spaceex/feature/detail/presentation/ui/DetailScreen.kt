@@ -55,7 +55,9 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.spaceex.core.designsystem.component.SpaceexAsyncImage
 import com.spaceex.core.designsystem.screen.ErrorScreen
+import com.spaceex.core.designsystem.theme.ButtonOnDetailTextColor
 import com.spaceex.core.designsystem.theme.SpaceexTheme
+import com.spaceex.core.designsystem.theme.WebcastColor
 import com.spaceex.feature.detail.domain.model.Rocket
 import com.spaceex.feature.detail.presentation.helper.rememberExternalUrlOpener
 import com.spaceex.feature.home.contract.model.LaunchContractModel
@@ -187,7 +189,6 @@ private fun LaunchHeroSection(launch: LaunchContractModel, onBackClick: () -> Un
             )
         }
 
-
         if (launch.imageUrl != null) {
             SpaceexAsyncImage(
                 image = launch.imageUrl.orEmpty(),
@@ -269,12 +270,19 @@ private fun LaunchActionsSection(launch: LaunchContractModel) {
                     openExternalUrl(launch.webcast.orEmpty())
                 },
                 modifier = Modifier.weight(1f),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD32F2F)),
+                colors = ButtonDefaults.buttonColors(containerColor = WebcastColor),
                 shape = RoundedCornerShape(12.dp)
             ) {
-                Icon(imageVector = Icons.Default.PlayArrow, contentDescription = null)
+                Icon(
+                    imageVector = Icons.Default.PlayArrow,
+                    contentDescription = null,
+                    tint = ButtonOnDetailTextColor
+                )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Webcast")
+                Text(
+                    text = "Webcast",
+                    color = ButtonOnDetailTextColor
+                )
             }
         }
 
@@ -287,9 +295,15 @@ private fun LaunchActionsSection(launch: LaunchContractModel) {
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onBackground)
             ) {
-                Icon(imageVector = Icons.Default.Info, contentDescription = null)
+                Icon(
+                    imageVector = Icons.Default.Info, contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onBackground
+                )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Details")
+                Text(
+                    text = "Details",
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             }
         }
     }

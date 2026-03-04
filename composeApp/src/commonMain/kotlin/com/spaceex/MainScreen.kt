@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.spaceex.core.designsystem.theme.SpaceexTheme
 import com.spaceex.core.navigation.NavGraphProvider
 import com.spaceex.core.navigation.NavigationManager
 import com.spaceex.feature.home.contract.HomeScreenDestination
@@ -21,7 +21,7 @@ internal fun MainScreen() {
 
     val navigationManager = getKoin().get<NavigationManager>()
 
-    CompositionLocalProvider {
+    SpaceexTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             content = { paddingValues ->

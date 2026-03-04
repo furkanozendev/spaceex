@@ -14,6 +14,8 @@ import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
+private const val TIMEOUT_MILLIS = 15_000L
+
 object KtorClientFactory {
 
     fun createClient(
@@ -43,9 +45,9 @@ object KtorClientFactory {
             }
 
             install(HttpTimeout) {
-                requestTimeoutMillis = 15_000
-                connectTimeoutMillis = 15_000
-                socketTimeoutMillis = 15_000
+                requestTimeoutMillis = TIMEOUT_MILLIS
+                connectTimeoutMillis = TIMEOUT_MILLIS
+                socketTimeoutMillis = TIMEOUT_MILLIS
             }
 
             defaultRequest {
